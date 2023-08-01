@@ -10,8 +10,30 @@ const get = await fetch(endpoint);
 //  console.log(data);
  let url = data.data[0].url;
  console.log(url);
+ return url
 
 
 }
 
-getImage('cat');
+async function randomGif(query) {
+    const endpoint = `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}&q=${query}&limit=25&offset=0&rating=g&lang=en`;
+    const get = await fetch(endpoint);
+    const data = await get.json(); 
+    let url = data.data[Math.floor(Math.random() * 25)].url;
+    console.log(url);
+    return url
+}
+
+async function helperFunction() {
+    await randomGif("dogs")
+}
+
+ function getArray() {
+    let gifArr = []
+    for(let i = 0; i < 25; i++) {
+         gifArr.push(helperFunction())
+    }
+    return gifArr
+}
+
+getArray();
